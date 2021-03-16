@@ -1,6 +1,6 @@
 import unittest
 
-from conways_game_of_life import starte_simulation
+from main.python.conways_game_of_life import starte_simulation
 
 
 class StarteSimulationTest(unittest.TestCase):
