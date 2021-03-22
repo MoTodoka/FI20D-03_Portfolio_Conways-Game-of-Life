@@ -1,4 +1,4 @@
-import time
+from matplotlib import pyplot
 
 MIN_ZEILEN = 5
 MAX_ZEILEN = 100
@@ -84,14 +84,18 @@ def starte_simulation(startkonfiguration: [[int]], anzahl_schritte: int, anzeige
 
     grid = startkonfiguration
 
+    if anzeigen:
+        fig, ax = pyplot.subplots()
+        ax.imshow(grid, cmap='gist_gray_r', vmin=0, vmax=1)
+        fig.canvas.draw()
+
     for runde in range(anzahl_schritte):
         grid = runde_spielen(grid)
         if anzeigen:
-            ergebnis_ausgeben(grid)
-            time.sleep(sekunden_pro_lebenszyklus)
-
-    if anzeigen:
-        ergebnis_ausgeben(grid)
+            ax.cla()
+            ax.imshow(grid, cmap='gist_gray_r', vmin=0, vmax=1)
+            fig.canvas.draw()
+            pyplot.pause(sekunden_pro_lebenszyklus)
 
     return grid
 
@@ -155,10 +159,3 @@ def lade_konfiguration(pfad_zur_datei: str):
         if stimmen_dimensionen_ueberein(grid, dateiinhalt_als_liste[1]):
             return grid
     return []
-
-
-def ergebnis_ausgeben(grid):
-    for y in grid:
-        print(y)
-    # Leerzeile zum Trennen der Grids in der Ausgabe
-    print("")
