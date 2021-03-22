@@ -139,3 +139,18 @@ class LadeKonfigurationTest(unittest.TestCase):
         expected_result = False
         result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_more_columns")
+
+    def test_file_content_different_line_length(self):
+        file_content = [
+            "Conway\n",
+            "4 6\n",
+            "START\n",
+            "100010\n",
+            "0010\n",
+            "01\n",
+            "00001\n",
+            "END",
+        ]
+        expected_result = False
+        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        self.assertEqual(expected_result, result, "test_file_content_different_line_length")
