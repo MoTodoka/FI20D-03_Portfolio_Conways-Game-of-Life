@@ -6,7 +6,7 @@ from main.python.conways_game_of_life import lade_konfiguration, ist_dateiinhalt
 
 class LadeKonfigurationTest(unittest.TestCase):
     def test_valid_file(self):
-        pfad = "../resources/conway_4_6_valid_file.txt"
+        pfad = "../resources/conway_valid_file.txt"
         expected_result = [
             ['1', '0', '0', '0', '1', '0'],
             ['0', '0', '1', '0', '1', '0'],
@@ -15,6 +15,12 @@ class LadeKonfigurationTest(unittest.TestCase):
         ]
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result, "test_valid_file")
+
+    def test_invalid_file(self):
+        pfad = "../resources/conway_invalid_file.txt"
+        expected_result = []
+        result = lade_konfiguration(pfad)
+        self.assertEqual(expected_result, result, "test_invalid_file")
 
     def test_file_content_valid_content(self):
         file_content = [
