@@ -1,7 +1,7 @@
 import unittest
 
 from main.python.conways_game_of_life import lade_konfiguration, ist_dateiinhalt_in_ordnung, \
-    stimmen_dimensionen_ueberein, lade_grid_aus_dateiinhalt
+    dimensionen_stimmen_ueberein, lade_grid_aus_dateiinhalt
 
 
 class LadeKonfigurationTest(unittest.TestCase):
@@ -91,7 +91,7 @@ class LadeKonfigurationTest(unittest.TestCase):
             "END",
         ]
         expected_result = False
-        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        result = dimensionen_stimmen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_less_lines")
 
     def test_file_content_more_lines(self):
@@ -107,7 +107,7 @@ class LadeKonfigurationTest(unittest.TestCase):
             "END",
         ]
         expected_result = False
-        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        result = dimensionen_stimmen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_more_lines")
 
     def test_file_content_less_columns(self):
@@ -122,7 +122,7 @@ class LadeKonfigurationTest(unittest.TestCase):
             "END",
         ]
         expected_result = False
-        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        result = dimensionen_stimmen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_less_columns")
 
     def test_file_content_more_columns(self):
@@ -137,7 +137,7 @@ class LadeKonfigurationTest(unittest.TestCase):
             "END",
         ]
         expected_result = False
-        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        result = dimensionen_stimmen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_more_columns")
 
     def test_file_content_different_line_length(self):
@@ -152,5 +152,5 @@ class LadeKonfigurationTest(unittest.TestCase):
             "END",
         ]
         expected_result = False
-        result = stimmen_dimensionen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
+        result = dimensionen_stimmen_ueberein(lade_grid_aus_dateiinhalt(file_content), file_content[1])
         self.assertEqual(expected_result, result, "test_file_content_different_line_length")

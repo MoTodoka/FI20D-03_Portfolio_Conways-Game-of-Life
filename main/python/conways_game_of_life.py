@@ -146,7 +146,7 @@ def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste):
             gestartet = True
 
 
-def stimmen_dimensionen_ueberein(grid, dimensionen):
+def dimensionen_stimmen_ueberein(grid, dimensionen):
     erwartete_zeilen = int(dimensionen.split()[0])
     erwartete_spalten = int(dimensionen.split()[1])
     return get_zeilenanzahl(grid) == erwartete_zeilen and get_spaltenanzahl(grid) == erwartete_spalten
@@ -156,6 +156,6 @@ def lade_konfiguration(pfad_zur_datei: str):
     dateiinhalt_als_liste = lade_dateiinhalt_als_liste(pfad_zur_datei)
     if ist_dateiinhalt_in_ordnung(dateiinhalt_als_liste):
         grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
-        if stimmen_dimensionen_ueberein(grid, dateiinhalt_als_liste[1]):
+        if dimensionen_stimmen_ueberein(grid, dateiinhalt_als_liste[1]):
             return grid
     return []
