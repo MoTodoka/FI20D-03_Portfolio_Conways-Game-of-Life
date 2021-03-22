@@ -16,10 +16,7 @@ def get_spaltenanzahl(grid):
         spaltenanzahl_liste.append(len(zeile))
     for i in range(len(spaltenanzahl_liste)):
         if spaltenanzahl_liste[0] != spaltenanzahl_liste[i]:
-            print(f"Unterschiedlich lange Zeilen:")
-            print(f"Zeile 0 = {spaltenanzahl_liste[0]}")
-            print(f" Zeile {i} = {spaltenanzahl_liste[i]}")
-            return None
+            return 0
     return spaltenanzahl_liste[0]
 
 
@@ -81,7 +78,7 @@ def runde_spielen(grid):
     return neues_grid
 
 
-def starte_simulation(startkonfiguration, anzahl_schritte, anzeigen=False, sekunden_pro_lebenszyklus=0.3):
+def starte_simulation(startkonfiguration: [[int]], anzahl_schritte: int, anzeigen=False, sekunden_pro_lebenszyklus=0.3):
     if not (ist_startkonfiguration_in_ordnung(startkonfiguration)):
         return []
 
@@ -106,6 +103,29 @@ def lade_dateiinhalt_als_liste(pfad_zur_datei):
     return dateiinhalt_als_liste
 
 
+def sind_dimensionen_in_ordnung(dimensionen):
+    dimensionen_liste = dimensionen.split()
+    laenge_okay = len(dimensionen_liste) == 2
+    zeilen_okay = dimensionen_liste[0].isdigit()
+    spalten_okay = dimensionen_liste[1].isdigit()
+    return laenge_okay and zeilen_okay and spalten_okay
+
+
+def datei_enthaelt_zeile(pruefstring, dateiinhalt_als_liste):
+    for zeile in dateiinhalt_als_liste:
+        if zeile.startswith(pruefstring):
+            return True
+    return False
+
+
+def ist_dateiinhalt_in_ordnung(dateiinhalt_als_liste):
+    header_okay = ist_header_in_ordnung(dateiinhalt_als_liste[0])
+    dimensionen_okay = sind_dimensionen_in_ordnung(dateiinhalt_als_liste[1])
+    enthaelt_start = datei_enthaelt_zeile("START\n", dateiinhalt_als_liste)
+    enthaelt_end = datei_enthaelt_zeile("END", dateiinhalt_als_liste)
+    return header_okay and dimensionen_okay and enthaelt_start and enthaelt_end
+
+
 def ist_header_in_ordnung(header):
     return header == "Conway\n"
 
@@ -115,15 +135,14 @@ def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste):
     grid = []
     for zeile in dateiinhalt_als_liste:
         if gestartet:
-            # Substring, um den möglichen Zeilenumbruch (\n) loszuwerden.
-            if zeile[0:3] == "END":
+            if zeile.startswith("END"):
                 return grid
             grid.append([char for char in zeile if char != '\n'])
-        if zeile == "START\n":
+        if zeile.startswith("START"):
             gestartet = True
 
 
-def sind_dimensionen_in_ordnung(grid, dimensionen):
+def stimmen_dimensionen_ueberein(grid, dimensionen):
     erwartete_zeilen = int(dimensionen.split()[0])
     erwartete_spalten = int(dimensionen.split()[1])
     return get_zeilenanzahl(grid) == erwartete_zeilen and get_spaltenanzahl(grid) == erwartete_spalten
@@ -131,12 +150,11 @@ def sind_dimensionen_in_ordnung(grid, dimensionen):
 
 def lade_konfiguration(pfad_zur_datei: str):
     dateiinhalt_als_liste = lade_dateiinhalt_als_liste(pfad_zur_datei)
-    if not (ist_header_in_ordnung(dateiinhalt_als_liste[0])):
-        return []
-    grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
-    if not (sind_dimensionen_in_ordnung(grid, dateiinhalt_als_liste[1])):
-        return []
-    return grid
+    if ist_dateiinhalt_in_ordnung(dateiinhalt_als_liste):
+        grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
+        if stimmen_dimensionen_ueberein(grid, dateiinhalt_als_liste[1]):
+            return grid
+    return []
 
 
 def ergebnis_ausgeben(grid):

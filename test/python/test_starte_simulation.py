@@ -168,6 +168,56 @@ class StarteSimulationTest(unittest.TestCase):
         ]
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
 
+    def test_4_lines_7(self):
+        startkonfiguration = [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+        ]
+        expected_result = []
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
+    def test_4_columns_7(self):
+        startkonfiguration = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ]
+        expected_result = []
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
+    def test_columns_with_different_length_7(self):
+        startkonfiguration = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0, 1],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ]
+        expected_result = []
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
+    def test_101_lines_length_7(self):
+        startkonfiguration = []
+        for y in range(101):
+            startkonfiguration.append([])
+            for x in range(5):
+                startkonfiguration[y].append(1)
+        expected_result = []
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
+    def test_101_columns_length_7(self):
+        startkonfiguration = []
+        for y in range(5):
+            startkonfiguration.append([])
+            for x in range(101):
+                startkonfiguration[y].append(1)
+        expected_result = []
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
     @staticmethod
     def vis_test_glider_anzeigen():
         # Rein visueller Test. Wird nicht automatisch getestet!
