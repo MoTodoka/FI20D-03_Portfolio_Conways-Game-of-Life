@@ -17,18 +17,18 @@ class LadeKonfigurationTest(unittest.TestCase):
 
     def test_4_6_wrong_header(self):
         pfad = "../resources/conway_4_6_wrong_header.txt"
-        expected_result = [[]]
+        expected_result = []
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result)
 
     def test_4_6_less_lines(self):
         pfad = "../resources/conway_4_6_less_lines.txt"
-        expected_result = [[]]
+        expected_result = []
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result)
 
     def test_4_6_less_columns(self):
         pfad = "../resources/conway_4_6_less_columns.txt"
-        expected_result = [[]]
+        expected_result = []
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result)

@@ -83,7 +83,7 @@ def runde_spielen(grid):
 
 def starte_simulation(startkonfiguration, anzahl_schritte, anzeigen=False, sekunden_pro_lebenszyklus=0.3):
     if not (ist_startkonfiguration_in_ordnung(startkonfiguration)):
-        return [[]]
+        return []
 
     grid = startkonfiguration
 
@@ -132,10 +132,10 @@ def sind_dimensionen_in_ordnung(grid, dimensionen):
 def lade_konfiguration(pfad_zur_datei: str):
     dateiinhalt_als_liste = lade_dateiinhalt_als_liste(pfad_zur_datei)
     if not (ist_header_in_ordnung(dateiinhalt_als_liste[0])):
-        return [[]]
+        return []
     grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
     if not (sind_dimensionen_in_ordnung(grid, dateiinhalt_als_liste[1])):
-        return [[]]
+        return []
     return grid
 
 
