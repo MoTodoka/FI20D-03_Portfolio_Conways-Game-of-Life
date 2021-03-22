@@ -99,6 +99,46 @@ def starte_simulation(startkonfiguration, anzahl_schritte, anzeigen=False, sekun
     return grid
 
 
+def lade_dateiinhalt_als_liste(pfad_zur_datei):
+    datei = open(pfad_zur_datei, 'r')
+    dateiinhalt_als_liste = [zeile for zeile in datei]
+    datei.close()
+    return dateiinhalt_als_liste
+
+
+def ist_header_in_ordnung(header):
+    return header == "Conway\n"
+
+
+def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste):
+    gestartet = False
+    grid = []
+    for zeile in dateiinhalt_als_liste:
+        if gestartet:
+            # Substring, um den möglichen Zeilenumbruch (\n) loszuwerden.
+            if zeile[0:3] == "END":
+                return grid
+            grid.append([char for char in zeile if char != '\n'])
+        if zeile == "START\n":
+            gestartet = True
+
+
+def sind_dimensionen_in_ordnung(grid, dimensionen):
+    erwartete_zeilen = int(dimensionen.split()[0])
+    erwartete_spalten = int(dimensionen.split()[1])
+    return get_zeilenanzahl(grid) == erwartete_zeilen and get_spaltenanzahl(grid) == erwartete_spalten
+
+
+def lade_konfiguration(pfad_zur_datei: str):
+    dateiinhalt_als_liste = lade_dateiinhalt_als_liste(pfad_zur_datei)
+    if not (ist_header_in_ordnung(dateiinhalt_als_liste[0])):
+        return [[]]
+    grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
+    if not (sind_dimensionen_in_ordnung(grid, dateiinhalt_als_liste[1])):
+        return [[]]
+    return grid
+
+
 def ergebnis_ausgeben(grid):
     for y in grid:
         print(y)
