@@ -1,3 +1,5 @@
+import os
+
 from matplotlib import pyplot
 
 MIN_ZEILEN = 5
@@ -114,18 +116,24 @@ def lade_konfiguration(pfad_zur_datei: str) -> [[int]]:
 
 
 def lade_dateiinhalt_als_liste(pfad_zur_datei) -> [str]:
-    datei = open(pfad_zur_datei, 'r')
-    dateiinhalt_als_liste = [zeile for zeile in datei]
-    datei.close()
-    return dateiinhalt_als_liste
+    if os.path.exists(pfad_zur_datei):
+        datei = open(pfad_zur_datei, 'r')
+        dateiinhalt_als_liste = [zeile for zeile in datei]
+        datei.close()
+        return dateiinhalt_als_liste
+    else:
+        return list()
 
 
 def ist_dateiinhalt_in_ordnung(dateiinhalt_als_liste) -> bool:
-    header_okay = ist_header_in_ordnung(dateiinhalt_als_liste[0])
-    dimensionen_okay = sind_dimensionen_in_ordnung(dateiinhalt_als_liste[1])
-    enthaelt_start = datei_enthaelt_zeile("START\n", dateiinhalt_als_liste)
-    enthaelt_end = datei_enthaelt_zeile("END", dateiinhalt_als_liste)
-    return header_okay and dimensionen_okay and enthaelt_start and enthaelt_end
+    try:
+        header_okay = ist_header_in_ordnung(dateiinhalt_als_liste[0])
+        dimensionen_okay = sind_dimensionen_in_ordnung(dateiinhalt_als_liste[1])
+        enthaelt_start = datei_enthaelt_string("START", dateiinhalt_als_liste)
+        enthaelt_end = datei_enthaelt_string("END", dateiinhalt_als_liste)
+        return header_okay and dimensionen_okay and enthaelt_start and enthaelt_end
+    except IndexError:
+        return False
 
 
 def ist_header_in_ordnung(header) -> bool:
@@ -140,7 +148,7 @@ def sind_dimensionen_in_ordnung(dimensionen) -> bool:
     return laenge_okay and zeilen_okay and spalten_okay
 
 
-def datei_enthaelt_zeile(pruefstring, dateiinhalt_als_liste) -> bool:
+def datei_enthaelt_string(pruefstring, dateiinhalt_als_liste) -> bool:
     for zeile in dateiinhalt_als_liste:
         if zeile.startswith(pruefstring):
             return True
@@ -154,7 +162,7 @@ def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste) -> [[int]]:
         if gestartet:
             if zeile.startswith("END"):
                 return grid
-            grid.append([char for char in zeile if char != '\n'])
+            grid.append([char for char in zeile if char != '\n' and char != '\r'])
         if zeile.startswith("START"):
             gestartet = True
 

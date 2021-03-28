@@ -22,6 +22,12 @@ class LadeKonfigurationTest(unittest.TestCase):
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result, "test_invalid_file")
 
+    def test_missing_file(self):
+        pfad = "../resources/conway_missing_file.txt"
+        expected_result = list()
+        result = lade_konfiguration(pfad)
+        self.assertEqual(expected_result, result, "test_invalid_file")
+
     def test_file_content_valid_content(self):
         file_content = [
             "Conway\n",
