@@ -175,7 +175,7 @@ class StarteSimulationTest(unittest.TestCase):
             [0, 0, 0, 0, 1, 1],
             [0, 0, 0, 0, 0, 1],
         ]
-        expected_result = []
+        expected_result = list()
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
 
     def test_4_columns_7(self):
@@ -186,7 +186,7 @@ class StarteSimulationTest(unittest.TestCase):
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ]
-        expected_result = []
+        expected_result = list()
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
 
     def test_columns_with_different_length_7(self):
@@ -197,23 +197,28 @@ class StarteSimulationTest(unittest.TestCase):
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ]
-        expected_result = []
+        expected_result = list()
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
 
     def test_101_lines_length_7(self):
-        startkonfiguration = []
+        startkonfiguration = list()
         for y in range(101):
-            startkonfiguration.append([])
+            startkonfiguration.append(list())
             for x in range(5):
                 startkonfiguration[y].append(1)
-        expected_result = []
+        expected_result = list()
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
 
     def test_101_columns_length_7(self):
-        startkonfiguration = []
+        startkonfiguration = list()
         for y in range(5):
-            startkonfiguration.append([])
+            startkonfiguration.append(list())
             for x in range(101):
                 startkonfiguration[y].append(1)
-        expected_result = []
+        expected_result = list()
         self.assertEqual(expected_result, starte_simulation(startkonfiguration, 7))
+
+    def test_empty_list(self):
+        startkonfiguration = list()
+        expected_result = list()
+        self.assertEqual(expected_result, starte_simulation(startkonfiguration, 1))

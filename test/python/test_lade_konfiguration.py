@@ -18,7 +18,7 @@ class LadeKonfigurationTest(unittest.TestCase):
 
     def test_invalid_file(self):
         pfad = "../resources/conway_invalid_file.txt"
-        expected_result = []
+        expected_result = list()
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result, "test_invalid_file")
 

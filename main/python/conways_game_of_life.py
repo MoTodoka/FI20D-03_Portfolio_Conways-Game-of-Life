@@ -11,7 +11,7 @@ def starte_simulation(startkonfiguration: [[int]], anzahl_schritte: int, anzeige
     """Gibt die Zellenanordnung nach dem letzten Schritt als geschachtelte Liste aus. Bei Fehler wird eine leere
     Liste ausgegeben."""
     if not (ist_startkonfiguration_in_ordnung(startkonfiguration)):
-        return []
+        return list()
 
     grid = startkonfiguration
 
@@ -20,7 +20,7 @@ def starte_simulation(startkonfiguration: [[int]], anzahl_schritte: int, anzeige
         ax.imshow(grid, cmap='gist_gray_r', vmin=0, vmax=1)
         fig.canvas.draw()
 
-    for runde in range(anzahl_schritte):
+    for _ in range(anzahl_schritte):
         grid = runde_spielen(grid)
         if anzeigen:
             ax.cla()
@@ -48,20 +48,18 @@ def ist_spaltenanzahl_in_ordnung(grid):
 
 
 def get_spaltenanzahl(grid):
-    spaltenanzahl_liste = []
+    laenge_erste_zeile = len(grid[0])
     for zeile in grid:
-        spaltenanzahl_liste.append(len(zeile))
-    for i in range(len(spaltenanzahl_liste)):
-        if spaltenanzahl_liste[0] != spaltenanzahl_liste[i]:
+        if laenge_erste_zeile != len(zeile):
             return 0
-    return spaltenanzahl_liste[0]
+    return laenge_erste_zeile
 
 
 def runde_spielen(grid):
-    neues_grid = []
+    neues_grid = list()
 
     for y in range(get_zeilenanzahl(grid)):
-        neues_grid.append([])
+        neues_grid.append(list())
         for x in range(get_spaltenanzahl(grid)):
             status_alt = grid[y][x]
             anzahl_lebende_nachbarn = get_anzahl_lebende_nachbarn(grid, y, x)
@@ -110,7 +108,7 @@ def lade_konfiguration(pfad_zur_datei: str):
         grid = lade_grid_aus_dateiinhalt(dateiinhalt_als_liste)
         if dimensionen_stimmen_ueberein(grid, dateiinhalt_als_liste[1]):
             return grid
-    return []
+    return list()
 
 
 def lade_dateiinhalt_als_liste(pfad_zur_datei):
@@ -149,7 +147,7 @@ def datei_enthaelt_zeile(pruefstring, dateiinhalt_als_liste):
 
 def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste):
     gestartet = False
-    grid = []
+    grid = list()
     for zeile in dateiinhalt_als_liste:
         if gestartet:
             if zeile.startswith("END"):
