@@ -8,10 +8,10 @@ class LadeKonfigurationTest(unittest.TestCase):
     def test_valid_file(self):
         pfad = "../resources/conway_valid_file.txt"
         expected_result = [
-            ['1', '0', '0', '0', '1', '0'],
-            ['0', '0', '1', '0', '1', '0'],
-            ['0', '1', '0', '0', '1', '0'],
-            ['0', '0', '0', '0', '1', '0']
+            [1, 0, 0, 0, 1, 0],
+            [0, 0, 1, 0, 1, 0],
+            [0, 1, 0, 0, 1, 0],
+            [0, 0, 0, 0, 1, 0]
         ]
         result = lade_konfiguration(pfad)
         self.assertEqual(expected_result, result, "test_valid_file")

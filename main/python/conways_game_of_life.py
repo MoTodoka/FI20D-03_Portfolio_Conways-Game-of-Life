@@ -162,7 +162,7 @@ def lade_grid_aus_dateiinhalt(dateiinhalt_als_liste) -> [[int]]:
         if gestartet:
             if zeile.startswith("END"):
                 return grid
-            grid.append([char for char in zeile if char != '\n' and char != '\r'])
+            grid.append([int(char) for char in zeile if char != '\n' and char != '\r'])
         if zeile.startswith("START"):
             gestartet = True
 
